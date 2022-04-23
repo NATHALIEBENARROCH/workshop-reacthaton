@@ -1,6 +1,7 @@
 import type { GetServerSideProps, NextPage } from "next";
 import { Layout } from "../../components/layout";
 import { Comment, Recipe } from "../../types";
+import { database } from "../../lib/database";
 
 type Props = {
   recipe: Recipe;
@@ -23,8 +24,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       },
     };
   }
-
+  const id = context.params?.id;
+  const recipe = await database.recipe(String(id));
   return {
-    props: {},
+    props: { recipe },
   };
 };
